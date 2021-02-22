@@ -9,78 +9,58 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
-
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.Editable;
 import android.text.InputType;
-import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
-import android.text.method.ScrollingMovementMethod;
 import android.text.style.BackgroundColorSpan;
-import android.text.style.RelativeSizeSpan;
-import android.text.style.TypefaceSpan;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /* Changelog
-   1.20.3 share "long press" selection: line, day, folder via
+   1.20.3 share "long press" selection: line, day, folder via sharing
    1.20.2 only copy selected text to clipboard, if its length is > 0
    1.20.1 allow empty input if timestamp is added
    1.20.0 folders with property timestamp instead of global setting
@@ -137,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
+    private static final String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
@@ -171,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public class MyTimerTask implements Runnable   // implement Runnable with parameter: https://stackoverflow.com/questions/35521340/parameter-in-runonuithread
     {
-        private EditText et;
+        private final EditText et;
         public MyTimerTask(EditText et) {
             this.et = et;
         }
@@ -362,8 +342,8 @@ public class MainActivity extends AppCompatActivity {
         // we need these controls in so many places ...
         fabEdit = findViewById(R.id.fabEdit);
         fabPlus = findViewById(R.id.fabPlus);
-        editMain = (EditText)findViewById(R.id.editMain);
-        editMainScroller = (ScrollView) findViewById(R.id.scrollerMain);
+        editMain = findViewById(R.id.editMain);
+        editMainScroller = findViewById(R.id.scrollerMain);
 
         // prevent data loss: any change to EditText shall be saved (temporarily) in SharedPreferences (reason: user pushes Android Home / Back) + set a dirty flag
         editMain.addTextChangedListener(new TextWatcher() {
@@ -429,14 +409,13 @@ public class MainActivity extends AppCompatActivity {
                     //  1.20.3 search for line starting with a valid date
                     int dayStart = 0, dayEnd = 0;
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    String lines[] = editMain.getText().toString().split("\n");
+                    String[] lines = editMain.getText().toString().split("\n");
                     for (int i = line; i >= 0; i--) {
                         try {
                             dateFormat.parse(lines[i]);
                             dayStart = i;
                             break;
                         } catch (Exception e) {
-                            ;
                         }
                     }
                     //  1.20.3 search for last line of day = "" because \n is converted by split to ""
@@ -523,7 +502,7 @@ public class MainActivity extends AppCompatActivity {
                                 // show in editMain
                                 SpannableString ss = formatText(DataStore.dataSection.get(DataStore.selectedSection));
                                 editMain.setText(ss, EditText.BufferType.SPANNABLE);
-                                // take care about preferences & button appearence & keyboard
+                                // take care about preferences & button appearance & keyboard
                                 editor.putBoolean("editMode", editMainEditMode);
                                 editor.putBoolean("saveChangesDialogOpen", false);
                                 editor.commit();
@@ -557,7 +536,7 @@ public class MainActivity extends AppCompatActivity {
                                 convertIniTextToDataStore(fileText);
                                 SpannableString ss = formatText(DataStore.dataSection.get(DataStore.selectedSection));
                                 editMain.setText(ss, EditText.BufferType.SPANNABLE);
-                                // take care about preferences & button appearence & keyboard
+                                // take care about preferences & button appearance & keyboard
                                 editor.putBoolean("editMode", editMainEditMode);
                                 editor.putBoolean("saveChangesDialogOpen", false);
                                 editor.commit();
@@ -587,10 +566,10 @@ public class MainActivity extends AppCompatActivity {
                         alert.show();
                         // title and message of AlertDialog.Builder are otherwise invisible in dark theme
                         int textViewId = builder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-                        TextView tv = (TextView) alert.findViewById(textViewId);
+                        TextView tv = alert.findViewById(textViewId);
                         tv.setTextColor(Color.BLACK);
                         textViewId = builder.getContext().getResources().getIdentifier("android:id/message", null, null);
-                        tv = (TextView) alert.findViewById(textViewId);
+                        tv = alert.findViewById(textViewId);
                         tv.setTextColor(Color.BLACK);
                     } else {
                         // change edit mode to OFF
@@ -631,7 +610,7 @@ public class MainActivity extends AppCompatActivity {
                     searchView.onActionViewCollapsed();
                 }
 
-                // 0.0.0.16 we need to supress the return in case inputAlert was restarted due to keyboard type change
+                // 0.0.0.16 we need to suppress the return in case inputAlert was restarted due to keyboard type change
                 if ( !inputAlertKbdToggle ) {
                     // 0.0.0.14 this happens, when input dlg was openend + user pushed 'Android Home' + "!" again
                     if (inputAlert != null && inputAlert.isShown()) {
@@ -782,7 +761,7 @@ public class MainActivity extends AppCompatActivity {
                         String fileText = readAppFileData(context);                          // read app data file
                         convertIniTextToDataStore(fileText);                                 // split app data file to DataStore class
                         String dsText = DataStore.dataSection.get(DataStore.selectedSection);// raw data from DataStore
-                        SpannableString ss = formatText(dsText);                             // format output to spnnable
+                        SpannableString ss = formatText(dsText);                             // format output to spannable
                         editMain.setText(ss, EditText.BufferType.SPANNABLE);                 // set editMain text
                         editMainScroll();                                                    // scroll to end if needed
                         // was hidden during input
@@ -810,7 +789,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // title of AlertDialog.Builder is otherwise invisible in dark theme
                 int textViewId = builder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-                TextView tv = (TextView) dlg.findViewById(textViewId);
+                TextView tv = dlg.findViewById(textViewId);
                 tv.setTextColor(Color.BLACK);
 
                 // both red bottom buttons shall be been hidden when AlertDialog.Builder is shown
@@ -853,7 +832,7 @@ public class MainActivity extends AppCompatActivity {
           - gets a String as input from DataStore
           - formats a String to be shown in editMain
           - takes care about new_on_ top or new_at_bottom
-          - takes care about serch results
+          - takes care about search results
     */
 
     // LogBook.txt PARSER: pre format data from file into DataStore class --> provide multiple file sections + their names + file selection index + keyboard type
@@ -903,7 +882,7 @@ public class MainActivity extends AppCompatActivity {
         int lastHeaderLine = 0;
         if ( parts[0].startsWith("file0:") ) {
             for ( int i=0; i<parts.length; i++ ) {
-                String key = "file" + String.valueOf(i) + ":";
+                String key = "file" + i + ":";
                 if ( parts[i].startsWith(key) ) {
                     String[] keyVal = parts[i].split(":");
                     if ( keyVal.length > 1 && keyVal[1].length() > 0 ) {
@@ -947,7 +926,7 @@ public class MainActivity extends AppCompatActivity {
         // next search for keyboard type sections
         int ndx = 0;
         for ( int i=0; i<parts.length; i++) {
-            String key = "keyboard" + String.valueOf(ndx) + ":";
+            String key = "keyboard" + ndx + ":";
             if ( parts[i].startsWith(key) ) {
                 String[] keyVal = parts[i].split(":");
                 try {
@@ -966,7 +945,7 @@ public class MainActivity extends AppCompatActivity {
         // next search for timestamp type sections
         ndx = 0;
         for ( int i=0; i<parts.length; i++) {
-            String key = "timestamp" + String.valueOf(ndx) + ":";
+            String key = "timestamp" + ndx + ":";
             if ( parts[i].startsWith(key) ) {
                 String[] keyVal = parts[i].split(":");
                 try {
@@ -986,14 +965,13 @@ public class MainActivity extends AppCompatActivity {
         String collector = "";
         ndx = 0;
         for ( int i=0; i<parts.length; i++) {
-            String key = "[[" + String.valueOf(ndx) + "]]";
+            String key = "[[" + ndx + "]]";
             if ( parts[i].equals(key) ) {
                 if ( ndx > 0 ) {  // we need to reject the first match
                     DataStore.dataSection.add(collector);
                 }
                 ndx++;
                 collector = "";
-                continue;
             } else {
                 collector += parts[i] + "\n";
             }
@@ -1019,30 +997,30 @@ public class MainActivity extends AppCompatActivity {
             if ( i >= DataStore.namesSection.size() ) {
                 break;
             }
-            txt += "file" + String.valueOf(i) + ":" + DataStore.namesSection.get(i) + "\n";
+            txt += "file" + i + ":" + DataStore.namesSection.get(i) + "\n";
         }
         // selected section index
-        txt += "index:" + String.valueOf(DataStore.selectedSection) + "\n";
+        txt += "index:" + DataStore.selectedSection + "\n";
         // section keyboard types
         for ( int i=0; i<SECTIONS_COUNT; i++ ) {
             if ( i >= DataStore.namesSection.size() ) {
                 break;
             }
-            txt += "keyboard" + String.valueOf(i) + ":" + String.valueOf(DataStore.kbdSection.get(i)) + "\n";
+            txt += "keyboard" + i + ":" + DataStore.kbdSection.get(i) + "\n";
         }
         // section timestamp types
         for ( int i=0; i<SECTIONS_COUNT; i++ ) {
             if ( i >= DataStore.timeSection.size() ) {
                 break;
             }
-            txt += "timestamp" + String.valueOf(i) + ":" + String.valueOf(DataStore.timeSection.get(i)) + "\n";
+            txt += "timestamp" + i + ":" + DataStore.timeSection.get(i) + "\n";
         }
         // section data
         for ( int i=0; i<SECTIONS_COUNT; i++ ) {
             if ( i >= DataStore.dataSection.size() ) {
                 break;
             }
-            txt += "[[" + String.valueOf(i) + "]]\n";
+            txt += "[[" + i + "]]\n";
             txt += DataStore.dataSection.get(i);
         }
         return txt;
@@ -1173,7 +1151,7 @@ public class MainActivity extends AppCompatActivity {
                 byteArray[i++] = (byte) oneChar;
             }
             fis.close();
-            fileText = new String( byteArray, "UTF-8" );
+            fileText = new String( byteArray, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1192,7 +1170,7 @@ public class MainActivity extends AppCompatActivity {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(file);
-            fos.write(text.getBytes("UTF8"));
+            fos.write(text.getBytes(StandardCharsets.UTF_8));
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -1240,7 +1218,7 @@ public class MainActivity extends AppCompatActivity {
         return saveStr;
     }
 
-    // scroll editMain to a specific location, depends on SWOW_ORDER or a given cursor placement
+    // scroll editMain to a specific location, depends on SHOW_ORDER or a given cursor placement
     void editMainScroll() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SHOW_ORDER showOrder = !prefs.getBoolean("newOnTop", false) ? SHOW_ORDER.TOP : SHOW_ORDER.BOTTOM;
@@ -1402,7 +1380,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     editMainSelStart = -1;
-                    Toast.makeText(getApplicationContext(), "\'" + query + "\' - not found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "'" + query + "' - not found", Toast.LENGTH_SHORT).show();
                     SpannableString ss = formatText(etText);
                     editMain.setText(ss, EditText.BufferType.SPANNABLE);
                     editMainScroll();
@@ -1512,7 +1490,7 @@ public class MainActivity extends AppCompatActivity {
             listView.setDividerHeight(2);
             shareDialog.show();
             int textViewId = shareBuilder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-            TextView tv = (TextView)shareDialog.findViewById(textViewId);
+            TextView tv = shareDialog.findViewById(textViewId);
             tv.setTextColor(Color.BLACK);
         }
 
@@ -1622,7 +1600,7 @@ public class MainActivity extends AppCompatActivity {
                                         String txt = convertDataStoreToIniText();       // prepare DataStore for write output
                                         writeAppFileData(getApplicationContext(), txt); // write to app data file
                                         // call menu item programmatically: https://stackoverflow.com/questions/30002471/how-to-programmatically-trigger-click-on-a-menuitem-in-android
-                                        ((ActionMenuItemView) findViewById(R.id.action_ChangeFolder)).callOnClick();
+                                        findViewById(R.id.action_ChangeFolder).callOnClick();
                                         // update app title bar
                                         setTitle(DataStore.namesSection.get(DataStore.selectedSection));
                                         // close parent dialog
@@ -1643,7 +1621,7 @@ public class MainActivity extends AppCompatActivity {
                                 // folder name rename show
                                 Dialog renameDialog = renameBuilder.show();
                                 int textViewId = renameBuilder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-                                TextView tv = (TextView) renameDialog.findViewById(textViewId);
+                                TextView tv = renameDialog.findViewById(textViewId);
                                 tv.setTextColor(Color.BLACK);
                                 // tricky way to let the keyboard popup
                                 input.requestFocus();
@@ -1691,7 +1669,7 @@ public class MainActivity extends AppCompatActivity {
                                 listView.setDividerHeight(2);
                                 dialog.show();
                                 int textViewId = builder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-                                TextView tv = (TextView) dialog.findViewById(textViewId);
+                                TextView tv = dialog.findViewById(textViewId);
                                 tv.setTextColor(Color.BLACK);
 //                                int divierId = builder.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
 //                                View divider = dialog.findViewById(divierId);
@@ -1722,7 +1700,7 @@ public class MainActivity extends AppCompatActivity {
                                 });
                                 Dialog dialog = builder.show();
                                 int textViewId = builder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-                                TextView tv = (TextView) dialog.findViewById(textViewId);
+                                TextView tv = dialog.findViewById(textViewId);
                                 tv.setTextColor(Color.BLACK);
                             }
                             //  MORE FOLDER OPTIONS Remove Folder
@@ -1759,7 +1737,7 @@ public class MainActivity extends AppCompatActivity {
                                 });
                                 Dialog dialog = builder.show();
                                 int textViewId = builder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-                                TextView tv = (TextView) dialog.findViewById(textViewId);
+                                TextView tv = dialog.findViewById(textViewId);
                                 tv.setTextColor(Color.BLACK);
                             }
                             //  MORE FOLDER OPTIONS Move Folder one step up
@@ -1803,7 +1781,7 @@ public class MainActivity extends AppCompatActivity {
                                 });
                                 Dialog dialog = builder.show();
                                 int textViewId = builder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-                                TextView tv = (TextView) dialog.findViewById(textViewId);
+                                TextView tv = dialog.findViewById(textViewId);
                                 tv.setTextColor(Color.BLACK);
                             }
                             //  MORE FILE OPTIONS Add new Folder
@@ -1812,7 +1790,7 @@ public class MainActivity extends AppCompatActivity {
                                 if ( DataStore.namesSection.size() >= SECTIONS_COUNT ) {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(moreBuilder.getContext());
                                     builder.setTitle(R.string.note);
-                                    builder.setMessage(getString(R.string.main28) + String.valueOf(SECTIONS_COUNT) + getString(R.string.main29));
+                                    builder.setMessage(getString(R.string.main28) + SECTIONS_COUNT + getString(R.string.main29));
                                     builder.setIcon(android.R.drawable.ic_dialog_alert);
                                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
@@ -1821,10 +1799,10 @@ public class MainActivity extends AppCompatActivity {
                                     });
                                     Dialog dialog = builder.show();
                                     int textViewId = builder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-                                    TextView tv = (TextView) dialog.findViewById(textViewId);
+                                    TextView tv = dialog.findViewById(textViewId);
                                     tv.setTextColor(Color.BLACK);
                                     textViewId = builder.getContext().getResources().getIdentifier("android:id/message", null, null);
-                                    tv = (TextView) dialog.findViewById(textViewId);
+                                    tv = dialog.findViewById(textViewId);
                                     tv.setTextColor(Color.BLACK);
                                     return;
                                 }
@@ -1859,7 +1837,7 @@ public class MainActivity extends AppCompatActivity {
                                 });
                                 Dialog dialog = addBuilder.show();
                                 int textViewId = addBuilder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-                                TextView tv = (TextView) dialog.findViewById(textViewId);
+                                TextView tv = dialog.findViewById(textViewId);
                                 tv.setTextColor(Color.BLACK);
                                 // tricky way to let the keyboard popup
                                 input.requestFocus();
@@ -1889,7 +1867,7 @@ public class MainActivity extends AppCompatActivity {
                     listView.setDividerHeight(2);
                     moreDialog.show();
                     int textViewId = moreBuilder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-                    TextView tv = (TextView) ((AlertDialog) moreDialog).findViewById(textViewId);
+                    TextView tv = moreDialog.findViewById(textViewId);
                     tv.setTextColor(Color.BLACK);
                 }
             });
@@ -1900,7 +1878,7 @@ public class MainActivity extends AppCompatActivity {
             listView.setDividerHeight(2);
             changeFolderDialog.show();
             int textViewId = changeFileBuilder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-            TextView tv = (TextView)changeFolderDialog.findViewById(textViewId);
+            TextView tv = changeFolderDialog.findViewById(textViewId);
             tv.setTextColor(Color.BLACK);
         }
 
@@ -1945,10 +1923,10 @@ public class MainActivity extends AppCompatActivity {
         });
         Dialog dialog = builder.show();
         int textViewId = builder.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
-        TextView tv = (TextView) dialog.findViewById(textViewId);
+        TextView tv = dialog.findViewById(textViewId);
         tv.setTextColor(Color.BLACK);
         textViewId = builder.getContext().getResources().getIdentifier("android:id/message", null, null);
-        tv = (TextView) dialog.findViewById(textViewId);
+        tv = dialog.findViewById(textViewId);
         tv.setTextColor(Color.BLACK);
     }
 
