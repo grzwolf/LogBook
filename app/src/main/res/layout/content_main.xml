@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <ScrollView
+        android:id="@+id/scrollerMain"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingTop="50dp"
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarStyle="insideInset"
+        android:overScrollMode="always"
+        android:fadeScrollbars="false"
+        android:scrollbarFadeDuration="0"
+        android:fillViewport="true"
+        tools:ignore="MissingConstraints">
+        <EditText
+            android:id="@+id/editMain"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:focusableInTouchMode="true"
+            android:textColorHighlight ="#ff0000"
+            android:layout_weight="1.0"/>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

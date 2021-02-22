@@ -1,0 +1,103 @@
+<resources>
+    <string name="app_name">LogBook</string>
+    <string name="action_settings">Settings</string>
+    <string name="appwidget_text"> ! </string>
+    <string name="add_widget">Add widget</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">About</string>
+    <string name="extra_header">Extra</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">LogBook 1.20.3</string>
+    <string name="signature_summary">\nContact: grzwolf.app@gmail.com</string>
+
+    <!-- Sync Preferences -->
+    <string name="editmode_title">LogBook edit mode</string>
+    <string name="kbdType_title">Keyboard mode after +</string>
+    <string name="widgetJumpInput_title">Action after tap Widget</string>
+    <string name="widgetJumpInput_summary_on">Jump to input</string>
+    <string name="widgetJumpInput_summary_off">Show current text</string>
+    <string name="rootPref1">New input placement</string>
+    <string name="rootPref2">Show new input at bottom</string>
+    <string name="rootPref3">Show new input at top</string>
+    <string name="rootPref6">Long press to clipboard</string>
+    <string name="rootPref7">Dark Mode</string>
+    <string name="rootPref8">Backup and Restore</string>
+    <string name="rootPref9">Backup File Information</string>
+    <string name="rootPref10">not existing</string>
+    <string name="rootPref11">Backup Data</string>
+    <string name="rootPref12">Click here to backup your data</string>
+    <string name="rootPref13">Restore Data</string>
+    <string name="rootPref14">Click here to restore data from Backup</string>
+
+    <!-- Common Strings-->
+    <string name="ok">Ok</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="more">More</string>
+    <string name="back">Back</string>
+    <string name="exit">Exit</string>
+    <string name="note">Note</string>
+    <string name="hint">Hint</string>
+    <string name="not_existing">- not existing -</string>
+
+    <!-- Settings Strings-->
+    <string name="set1">\"\nlast backup: \"</string>
+    <string name="set2">-- no backup existing --</string>
+    <string name="set3">No data available, no backup executed.</string>
+    <string name="set4">All items are empty, no backup executed.</string>
+    <string name="set5">Backup data</string>
+    <string name="set6">Do you want to backup the current data to:\n\n</string>
+    <string name="set7">\n\nThe file named above will be overwritten.</string>
+    <string name="set8">\n\nThe file named above will be created.</string>
+    <string name="set9">Backup success</string>
+    <string name="set10">ERROR: backup FAIL</string>
+    <string name="set11">\"\nlast backup: \"</string>
+    <string name="set12">No backup file existing</string>
+    <string name="set13">Restore from backup</string>
+    <string name="set14">You want to restore LogBook data \n</string>
+    <string name="set15">\n\nfrom backup\n</string>
+    <string name="set16">\n\nThis cannot be undone.</string>
+    <string name="set17">\"Restore from backup success = \"</string>
+    <string name="set18">Backup file not existing anymore</string>
+
+    <!-- MainActivity Strings-->
+    <string name="main1">Copied Text</string>
+    <string name="main2">unsaved changes</string>
+    <string name="main3">Unsaved changes</string>
+    <string name="main4">Do you want to save changed data?</string>
+    <string name="main5">Character sequence \'[[\' is not allowed and was changed to \'((\'.</string>
+    <string name="main6">Date and Time are added automatically</string>
+    <string name="main7">Write to logbook</string>
+    <string name="main8">switch keyboard --> numeric</string>
+    <string name="main9">switch keyboard --> text</string>
+    <string name="main11">Please first finish \'Edit Mode\'.</string>
+    <string name="main13">Select folder</string>
+    <string name="main14">Rename</string>
+    <string name="main14a">Timestamp</string>
+    <string name="main15">Clear data</string>
+    <string name="main16">Remove</string>
+    <string name="main17">Move up in list</string>
+    <string name="main18">Add to list</string>
+    <string name="main19">What to do with folder: \'</string>
+    <string name="main20">Change folder name</string>
+    <string name="main21">What to do with folder: \'</string>
+    <string name="main22">Clear folder data \'</string>
+    <string name="main23">Remove folder \'</string>
+    <string name="main24">folder</string>
+    <string name="main25">Folder is already on top of the list</string>
+    <string name="main26">Move folder \'</string>
+    <string name="main27">\' up in list?</string>
+    <string name="main28">\"\nThere is a limit of \"</string>
+    <string name="main29">\" folders.\"</string>
+    <string name="main30">Set new folder\'s name</string>
+    <string name="main31">Please first \'long press\' a line as selection.</string>
+    <string name="main32">selected line</string>
+    <string name="main33">surrounding day</string>
+    <string name="main34">current folder</string>
+    <string name="main35">Share \'long press\' selection</string>
+
+</resources>

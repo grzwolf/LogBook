@@ -1,0 +1,103 @@
+<resources>
+    <string name="app_name">LogBook</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="appwidget_text"> ! </string>
+    <string name="add_widget">Widget</string>
+    <string name="title_activity_settings">Einstellungen</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Über</string>
+    <string name="extra_header">Extra</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">LogBook 1.20.3</string>
+    <string name="signature_summary">\nKontakt: grzwolf.app@gmail.com</string>
+
+    <!-- Sync Preferences -->
+    <string name="editmode_title">LogBook Bearbeitungsmodus</string>
+    <string name="kbdType_title">Tastatur Modus nach +</string>
+    <string name="widgetJumpInput_title">Aktion nach Klick auf Widget</string>
+    <string name="widgetJumpInput_summary_on">Direkt zu Eingabe</string>
+    <string name="widgetJumpInput_summary_off">Zeige Text</string>
+    <string name="rootPref1">Platzierung von neuer Eingabe</string>
+    <string name="rootPref2">Zeige neue Eingabe am Ende</string>
+    <string name="rootPref3">Zeige neue Eingabe am Anfang</string>
+    <string name="rootPref6">Klick lang --> Zwischenablage</string>
+    <string name="rootPref7">Dark Modus</string>
+    <string name="rootPref8">Sichern und Wiederherstellen</string>
+    <string name="rootPref9">Sicherungsdatei Information</string>
+    <string name="rootPref10">existiert nicht</string>
+    <string name="rootPref11">Datensicherung</string>
+    <string name="rootPref12">Klicken zum Daten sichern</string>
+    <string name="rootPref13">Datenwiederherstellung</string>
+    <string name="rootPref14">Klicken zum Wiederherstellen</string>
+
+    <!-- Common Strings-->
+    <string name="ok">Ok</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="cancel">Abbruch</string>
+    <string name="more">Mehr</string>
+    <string name="back">Zurück</string>
+    <string name="exit">Exit</string>
+    <string name="note">Anmerkung</string>
+    <string name="hint">Hinweis</string>
+    <string name="not_existing">- existiert nicht -</string>
+
+    <!-- Settings Strings-->
+    <string name="set1">\"\nletztes Sicherung: \"</string>
+    <string name="set2">-- Sicherung existiert nicht --</string>
+    <string name="set3">Keine Daten für Sicherung vorhanden.</string>
+    <string name="set4">Keine Datensicherung ausgeführt.</string>
+    <string name="set5">Datensicherung</string>
+    <string name="set6">Sollen die Daten gesichert werden nach:\n\n</string>
+    <string name="set7">\n\nDie o.g. Datei wird dabei überschrieben.</string>
+    <string name="set8">\n\nDie o.g. Datei wird erzeugt.</string>
+    <string name="set9">Datensicherung erfolgreich</string>
+    <string name="set10">Fehler Datensicherung</string>
+    <string name="set11">\"\nletzte Sicherung: \"</string>
+    <string name="set12">Datensicherung existiert nicht</string>
+    <string name="set13">Datenwiederherstellung</string>
+    <string name="set14">LogBook Datenwiederherstellung \n</string>
+    <string name="set15">\n\naus Sicherung\n</string>
+    <string name="set16">\n\nDieser Vorgang kann nicht rückgängig gemacht werden.</string>
+    <string name="set17">\"Datenwiederherstellung erfolgreich = \"</string>
+    <string name="set18">Sicherungsdatei existiert nicht mehr</string>
+
+    <!-- MainActivity Strings-->
+    <string name="main1">Kopierter Text</string>
+    <string name="main2">ungespeicherte Änderung</string>
+    <string name="main3">Ungespeicherte Änderung</string>
+    <string name="main4">Sollen die geänderten Daten gespeichert werden?</string>
+    <string name="main5">Zeichenfolge \'[[\' ist nicht erlaubt und wurde geändert in \'((\'.</string>
+    <string name="main6">Datum und Zeit werden automatisch ergänzt</string>
+    <string name="main7">Eintrag vornehmen</string>
+    <string name="main8">Tastaturwechsel --> Zahlen</string>
+    <string name="main9">Tastaturwechsel --> Text</string>
+    <string name="main11">Bitte beenden: \'Edit Mode\'.</string>
+    <string name="main13">Ordner wählen</string>
+    <string name="main14">Umbenennen</string>
+    <string name="main14a">Zeitstempel</string>
+    <string name="main15">Daten löschen</string>
+    <string name="main16">Entfernen</string>
+    <string name="main17">In Liste aufwärts</string>
+    <string name="main18">Zur Liste anfügen</string>
+    <string name="main19">Was soll geschehen mit Ordner: \'</string>
+    <string name="main20">Ordnername ändern</string>
+    <string name="main21">Was soll geschehen mit Ordner: \'</string>
+    <string name="main22">Daten im Ordner löschen \'</string>
+    <string name="main23">Ordner löschen \'</string>
+    <string name="main24">Ordner</string>
+    <string name="main25">Ordner ist am Anfang </string>
+    <string name="main26">Ordner verschieben \'</string>
+    <string name="main27">\' aufwärts in Liste?</string>
+    <string name="main28">\"\nEs gibt ein Limit von \"</string>
+    <string name="main29">\" Ordnern.\"</string>
+    <string name="main30">Neuer Ordnername</string>
+    <string name="main31">Bitte erst eine \'Klick lang\' Auswahl treffen.</string>
+    <string name="main32">ausgewählte Zeile</string>
+    <string name="main33">umgebender Tag</string>
+    <string name="main34">aktueller Ordner</string>
+    <string name="main35">Weiterleiten der \'Klick lang\' Auswahl</string>
+
+</resources>
